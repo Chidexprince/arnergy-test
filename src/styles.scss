@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+.loading-container{
+  height: 150px;
+  width: 150px;
+   box-shadow: 0 0 20px 5px transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-left: 500px !important;
+}
+
+.contain{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 50px;
+  width: 50px;
+}
+
+.ball{
+  height: 50px;
+  width: 50px;
+  position: relative;
+  animation: jump 1500ms infinite cubic-bezier(0.61, 0.41, 0.43, 0.68);
+}
+.shadow{
+  height: 20px;
+  width: 40px;
+  background: #0000002b;
+  border-radius: 50%;
+  animation: expand 1500ms infinite cubic-bezier(0.61, 0.41, 0.43, 0.68);
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes jump{
+  0%{transform: translateY(30%) rotateZ(0deg); height: 50%; width: 110%}
+  15%{transform: translateY(0%) rotateZ(-20deg); height: 100%; width: 100%}
+  35%{transform: translateY(-160%) rotateZ(-160deg)}
+  50%{transform: translateY(-170%) rotateZ(-180deg)}
+  65%{transform: translateY(-160%) rotateZ(-200deg)}
+  85%{transform: translateY(0%) rotateZ(-340deg); height: 100%; width: 100%}
+  100%{transform: translateY(30%) rotateZ(-360deg); height: 50%; width: 110%}
+}
+
+@keyframes expand{
+  0%, 10%, 90%, 100%{width: 0%; height: 0%}
+  35%,65%{width: 120%; height: 40%}
+  50%{width: 130%; height: 44%}
+}
