@@ -1,38 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
+<app-header></app-header>
 
 <!-- jumbotron -->
 <div class="jumbotron text-center mt-5" id="mainHeader">
@@ -43,15 +9,15 @@
     <div class="container">
       <form class="form-inline justify-content-between">
 
-        <select name="competition" id="competition" class="form-control w-25" [(ngModel)]="competitionId">
-          <option value="" selected>All Competitions</option>
+        <select name="competition" id="competition" class="form-control w-25"
+          (change)="getSelectedCompetition($event.target)">
+          <option value="" selected>All Competition</option>
           <option *ngFor="let competition of competitions" value="{{competition.id}}">{{competition.name}}
             ({{competition.area.name}})</option>
         </select>
 
         <select *ngIf="competitionId" name="competition" id="competition" class="form-control w-25"
           [(ngModel)]='details' (change)="getCompetitionDetails()">
-          <option value=""></option>
           <option value="Standings">Standings</option>
           <option value="Matches">Matches</option>
         </select>
@@ -76,7 +42,7 @@
 
 <!-- Standings Table -->
 
-<table *ngIf="standings.length > 0">
+<table *ngIf="standings.length > 0 && details === 'Standings'">
   <thead>
     <tr>
       <th class="ttitle" colspan="10">
@@ -115,7 +81,7 @@
 
 
 <!-- Matches Table -->
-<table *ngIf="matches.length > 0">
+<table *ngIf="matches.length > 0 && details === 'Matches'">
   <thead>
     <tr>
       <th class="ttitle" colspan="10">
@@ -141,3 +107,19 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Error State -->
+<div *ngIf="error" class="text-center">
+  <img src="../../../assets/images/searching-error.png" width="300px" alt="" srcset="">
+  <div class="text-danger">
+    {{error}}
+  </div>
+</div>
+
+<!-- Empty State -->
+<div *ngIf="!state" class="text-center">
+  <img src="../../../assets/images/search-on-web.png" width="300px" alt="" srcset="">
+  <div class="text-black-50 mt-2">
+    We are waiting for you to make a selection
+  </div>
+</div>

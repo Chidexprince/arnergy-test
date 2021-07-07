@@ -2,7 +2,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 export class GeneralUtil {
 
-
   static isValidString(astring: any): boolean {
     if (astring !== undefined && astring !== '' && astring !== null) {
       return true;
@@ -29,19 +28,16 @@ export class GeneralUtil {
   static errorHandler(error) {
 
     if (error instanceof HttpErrorResponse) {
-     /*  if (error.status === 403) {
-        this.route.navigate(['/login']);
-      } */
 
       if (GeneralUtil.isValidString(error.error.message)) {
         console.log(error.error.message);
         return;
       }
 
-      console.log('Network error(1)');
+      console.log('Network error');
       return;
     }
-    console.log('Network error(2)');
+    console.log('Network error');
     return;
   }
 }

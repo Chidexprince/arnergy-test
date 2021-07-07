@@ -20,27 +20,19 @@ export class FootballComponent implements OnInit {
   public season = new Season();
   public details = '';
   public preloader = false;
+  public error = '';
+  public state = '';
 
   constructor(public footballDataService: FootballDataService) { }
 
   ngOnInit() {
-    /* this.getMatches(); */
     this.getAllCompetitions();
-   /*  this.getSelectedMatches() */
   }
 
-  getMatches() {
-    this.footballDataService.getTodaysMatch()
-      .subscribe(data => {
-        console.log(data)
-
-      })
-  }
 
   getAllCompetitions() {
     this.footballDataService.getAllCompetition()
       .subscribe(data => {
-        console.log(data)
         this.competitions = [];
 
         if (data.count > 0) {
@@ -50,65 +42,55 @@ export class FootballComponent implements OnInit {
             competition.mapToCompetition(c);
             this.competitions.push(competition);
           });
-          console.log(this.competitions)
         }
       }, error1 => {
         this.errorHandler(error1);
       })
   }
 
-/*   getSelectedCompetition() {
+  getSelectedCompetition(competition) {
+    this.competitionId = competition.value;
+    this.details = '';
+  }
 
-    this.footballDataService.getStandingsPerCompetition(this.competitionId)
-      .subscribe(data => {
-        console.log(data)
-        this.standings = [];
-        if (data.standings.length > 0) {
-          const standingsArray = data.standings;
-          standingsArray.forEach(s => {
-            const standing = new Standings();
-            standing.mapToStandings(s);
-            this.standings.push(standing)
-          });
-          console.log(this.standings)
-        }
-      }, error1 => {
-        this.errorHandler(error1);
-      })
-  } */
 
   getCompetitionDetails() {
     this.preloader = true;
-      if (this.details === 'Standings') {
-        // Get standings based on competition selected
-        this.footballDataService.getStandingsPerCompetition(this.competitionId)
-          .subscribe(data => {
-            this.preloader = false;
-            // get competition details
-            if (data.competition) {
-              this.competition.mapToCompetition(data.competition);
-            }
+    if (this.details === 'Standings') {
+      this.standings = [];
+      // Get standings based on competition selected
+      this.footballDataService.getStandingsPerCompetition(this.competitionId)
+        .subscribe(data => {
+          this.preloader = false;
+          // get competition details
+          if (data.competition) {
+            this.competition.mapToCompetition(data.competition);
+          }
 
-            // Get standings
-            this.standings = [];
-            if (data.standings.length > 0) {
-              const standingsArray = data.standings;
-              standingsArray.forEach(s => {
-                const standing = new Standings();
-                standing.mapToStandings(s);
-                this.standings.push(standing)
-              });
-              console.log(this.standings)
-            }
-          }, error1 => {
-            this.preloader = false;
-            this.errorHandler(error1);
-          })
-      }
+          // Get standings
 
-      if (this.details === 'Matches') {
-        // Get matches based on competition selected
-        this.footballDataService.getMatchesPerCompetition(this.competitionId)
+          if (data.standings.length > 0) {
+            const standingsArray = data.standings;
+            standingsArray.forEach(s => {
+              const standing = new Standings();
+              standing.mapToStandings(s);
+              this.standings.push(standing)
+            });
+            this.error = '';
+            this.state = 'Data available';
+          }
+        }, error1 => {
+          this.preloader = false;
+          this.state = 'No Data available';
+          this.error = error1.error.message;
+          this.errorHandler(error1);
+        })
+    }
+
+    if (this.details === 'Matches') {
+      // Get matches based on competition selected
+      this.matches = [];
+      this.footballDataService.getMatchesPerCompetition(this.competitionId)
         .subscribe(data => {
           this.preloader = false;
           // get competition details
@@ -117,7 +99,6 @@ export class FootballComponent implements OnInit {
           }
 
           // get match details
-          this.matches = [];
           if (data.matches.length > 0) {
             const matchesArray = data.matches;
             matchesArray.forEach(m => {
@@ -125,33 +106,20 @@ export class FootballComponent implements OnInit {
               match.mapToMatches(m);
               this.matches.push(match)
             });
-            console.log(this.matches)
+            this.error = '';
+            this.state = 'Data available';
           }
         }, error1 => {
           this.preloader = false;
+          this.state = 'No Data available';
+          this.error = error1.error.message;
           this.errorHandler(error1);
         })
-      }
+    }
 
 
 
   }
-/*   getSelectedMatches() {
-    this.footballDataService.getMatchesPerCompetition(2021)
-      .subscribe(data => {
-
-        this.matches = [];
-        if (data.matches.length > 0) {
-          const matchesArray = data.matches;
-          matchesArray.forEach(m => {
-            const match = new Matches();
-            match.mapToMatches(m);
-            this.matches.push(match)
-          });
-          console.log(this.matches)
-        }
-      })
-  } */
 
   // Error Handling
   errorHandler(error) {
