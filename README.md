@@ -1,6 +1,6 @@
-# Vue/Flutter Interview Project
+# ArnergyTest
 
-These are small projects for a Vue/Flotter interview at Arnergy Solar Ltd.
+These are small projects for an interview at Arnergy Solar Ltd.
 
 ## Goal
 
@@ -10,7 +10,6 @@ These are small projects for a Vue/Flotter interview at Arnergy Solar Ltd.
 
 ## UX/UI
 
-Up to you,
 Project Alpha - probably it should
 
 - include a layout containing a list of users ranked by coding activity in descending order (with names, total hours code, daily average and languages).
@@ -34,28 +33,6 @@ Project Gamma - probably it should
 - Project Beta - [BetterDoctor Api](https://developer.betterdoctor.com/).
 - Project Gamma - [Football-Data Api](http://api.football-data.org/index).
 
-## Bootstrapping the project
-
-Up to you, we recommend [create-nuxt-app](https://github.com/nuxt/create-nuxt-app).
-
-## Submitting the solution
-
-Copy this repository to a repository on your name and add the solution there. It should be clear how to build and run the project locally.
-
-## Bonus (don't need to be in the below specific order)
-
-- Use ES6 syntax including arrow functions, destructuring and async/await
-- Adding a spinner when information is loading
-- Deal with errors coming from the backend
-- Some sort of Unit Test
-- Having a nice UI using a components library (Vuetify?, Bootstrap?)
-- Divide the application in different pages and use a router
-- Adding state management
-- Show common tools used for you daily development environment (linters, code formatter, git workflow, docker and so on)
-- Maintain a clean project structure
-- Deploy the project somewhere
-
-# ArnergyTest
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
 
