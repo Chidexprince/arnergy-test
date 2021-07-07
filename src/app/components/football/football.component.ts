@@ -20,6 +20,7 @@ export class FootballComponent implements OnInit {
   public season = new Season();
   public details = '';
   public preloader = false;
+  public error = '';
 
   constructor(public footballDataService: FootballDataService) { }
 
@@ -55,6 +56,11 @@ export class FootballComponent implements OnInit {
       }, error1 => {
         this.errorHandler(error1);
       })
+  }
+
+  getSelectedCompetition(competition) {
+    this.competitionId = competition.value;
+    this.details = '';
   }
 
 /*   getSelectedCompetition() {
@@ -102,6 +108,7 @@ export class FootballComponent implements OnInit {
             }
           }, error1 => {
             this.preloader = false;
+            this.error = error1.error.message;
             this.errorHandler(error1);
           })
       }
@@ -129,6 +136,7 @@ export class FootballComponent implements OnInit {
           }
         }, error1 => {
           this.preloader = false;
+          this.error = error1.error.message;
           this.errorHandler(error1);
         })
       }

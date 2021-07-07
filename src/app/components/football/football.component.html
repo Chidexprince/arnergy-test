@@ -43,15 +43,14 @@
     <div class="container">
       <form class="form-inline justify-content-between">
 
-        <select name="competition" id="competition" class="form-control w-25" [(ngModel)]="competitionId">
-          <option value="" selected>All Competitions</option>
+        <select name="competition" id="competition" class="form-control w-25" (change)="getSelectedCompetition($event.target)">
+          <option value="" selected>All Competition</option>
           <option *ngFor="let competition of competitions" value="{{competition.id}}">{{competition.name}}
             ({{competition.area.name}})</option>
         </select>
 
         <select *ngIf="competitionId" name="competition" id="competition" class="form-control w-25"
           [(ngModel)]='details' (change)="getCompetitionDetails()">
-          <option value=""></option>
           <option value="Standings">Standings</option>
           <option value="Matches">Matches</option>
         </select>
